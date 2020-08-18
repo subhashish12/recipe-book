@@ -1,0 +1,32 @@
+<a 
+style="cursor: pointer;"
+[routerLink]="[index]"
+routerLinkActive="active"
+class="list-group-item text-decoration-none clearfix p-0 acti">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-md-8 col-sm-12" style="color: blue;">
+          <h4>{{recipe.name }}</h4>
+          <p> {{recipe.description}} </p>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <img 
+          class="img-fluid" 
+          [src]="recipe.imagePath" 
+          alt="{{recipe.name}}" 
+          >
+        </div>
+      </div>
+    </li>
+  </ul>
+  <!-- <h4 class="list-group-item"> {{recipe.name }}</h4>
+  <p class="list-group-item"> {{recipe.description}} </p> -->
+<!-- <span class="float-right">
+  <img 
+    class="img-fluid" 
+    [src]="recipe.imagePath" 
+    alt="{{recipe.name}}" 
+    style="max-height: 50px;">
+</span> -->
+</a>

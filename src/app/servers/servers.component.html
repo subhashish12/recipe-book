@@ -1,0 +1,24 @@
+
+
+<!-- one way data binding -->
+<!-- <input type="text" (input)="onUpdateServerName($event)"> -->  
+
+
+<!-- two way data binding -->
+<input type="text" [(ngModel)] = "newServerName"> 
+
+
+<p>{{newServerName}}</p>
+<button [disabled]="newServerName.length <= 0" class="btn btn-primary" (click)="changeServerCreateStatus()"> Add Server</button>
+
+
+<p *ngIf="isServerCreated ; else noServer">{{serverCreateStatus}}</p>
+<ng-template #noServer>
+  <p>No server was created</p>
+</ng-template>
+<app-server *ngFor = " let server of appServers " ></app-server>
+
+
+
+
+
