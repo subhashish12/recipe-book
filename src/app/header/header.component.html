@@ -14,15 +14,18 @@
         <a class="nav-link" >Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['recipes']">Recipes</a>
+        <a class="nav-link" [routerLink]="['recipes']" *ngIf="isAuthenticated">Recipes</a>
       </li>
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['shopping-list']" >Shopping List</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['auth']" *ngIf="!isAuthenticated" >Auth</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" style="cursor: pointer;"  tabindex="-1" aria-disabled="true" (click)="logout()" *ngIf="isAuthenticated">Logout</a>
+      </li>
+      <li class="nav-item"  *ngIf="isAuthenticated">
         <button class="btn btn-success m-2" (click)="saveData()" > Save Data</button>
         <button class="btn btn-primary" (click)="fetchData()">Fetch data</button>
       </li>
