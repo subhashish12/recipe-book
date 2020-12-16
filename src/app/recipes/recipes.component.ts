@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Recipe } from './recipe.model';
 
 @Component({
@@ -9,7 +10,8 @@ import { Recipe } from './recipe.model';
 export class RecipesComponent implements OnInit, OnDestroy {
   selectedRecipe: Recipe;
 
-  constructor() { }
+  constructor(  private router: Router, 
+    private route : ActivatedRoute) { }
 
   ngOnInit(): void {
 
@@ -19,6 +21,11 @@ export class RecipesComponent implements OnInit, OnDestroy {
     console.log("recipe top",recipe)
     this.selectedRecipe = recipe;
   }
+
+  onNewRecipe(){
+    this.router.navigate(['new'], {relativeTo: this.route});
+  }
+
   ngOnDestroy(){
   }
 }
