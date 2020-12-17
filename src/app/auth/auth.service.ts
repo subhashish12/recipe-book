@@ -1,9 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { User } from './user.model';
+import * as fromApp from '../store/app.reducer';
+import * as AuthActions from './store/auth.actions';
 
 interface AuthResponseData{
     kind: string;
@@ -20,7 +23,7 @@ interface AuthResponseData{
 export class AuthService{
     user = new BehaviorSubject<User>(null);
 
-    constructor(private http: HttpClient){
+    constructor(private http: HttpClient, private store: Store<fromApp.AppState>){
 
     }
 
@@ -51,8 +54,11 @@ export class AuthService{
                     expiry_date
                 );
                 
+                this.store.dispatch(new AuthActions.Login({ email: user.email, userId: user.id, token: user.token, expiry_date: user._tokenEpirationDate}))
+
                 localStorage.setItem('userData', JSON.stringify(user));
-                this.user.next(user);
+                // this.user.next(user);
+                // this.store.dispatch(new AuthActions.)
             })
         )
     }
@@ -65,12 +71,14 @@ export class AuthService{
 
         const loadedUser =  new User(userData.email, userData.id, userData._token, new Date(userData.expiry_date));
         if(loadedUser.token){
-            this.user.next(loadedUser)
+            // this.user.next(loadedUser)
+            this.store.dispatch(new AuthActions.Login({email: loadedUser.email, userId: loadedUser.id, token: loadedUser.token, expiry_date: new Date(loadedUser._tokenEpirationDate)}))
         }
     }
 
     logout(){
-        this.user.next(null); 
+        // this.user.next(null); 
+        this.store.dispatch(new AuthActions.Logout());
         localStorage.removeItem('userData')
     }
 }

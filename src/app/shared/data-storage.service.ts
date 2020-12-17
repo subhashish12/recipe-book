@@ -12,6 +12,7 @@ export class DataStoreService{
 
     storeRecipe(){
         const recipes = this.recipeService.getRecipes();
+        console.log('recipes outgoing', recipes)
         this.http.put('https://ang-recipe-97de6.firebaseio.com/recipes.json', recipes).subscribe(response=>{
             console.log('response', response);
         })
@@ -21,7 +22,6 @@ export class DataStoreService{
         return this.http.get<Recipe[]>('https://ang-recipe-97de6.firebaseio.com/recipes.json')
         .pipe(map(recipes =>{
             return recipes.map(recipe=>{
-                console.log('sdsd', recipe)
                 return { ...recipe, ingredients: recipe.ingredients ? recipe.ingredients : [] }
             })
         }),

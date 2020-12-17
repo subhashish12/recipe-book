@@ -2,8 +2,11 @@ import { Recipe } from './recipe.model';
 import { Inject, Injectable } from '@angular/core';
 import { Ingredient } from '../shared/ingredient.model';
 import { Subject } from 'rxjs';
-import { ShoppingListService } from '../shopping-list/shopping-list.service';
-import { EventEmitter } from 'protractor';
+import { Store } from '@ngrx/store';
+import * as ShoppingListActions from '../shopping-list/store/shopping-list.action';
+import * as fromShoppingList from '../shopping-list/store/shopping-list.reducer';
+import * as fromApp from '../store/app.reducer';
+
 
 @Injectable() //imported to service where we want to import
 export class RecipeService{
@@ -11,7 +14,7 @@ export class RecipeService{
 
   private recipes: Recipe[] = [];
 
-  constructor(private shoppingListService: ShoppingListService){
+  constructor( private store: Store<fromApp.AppState>){
 
   }
 
@@ -25,7 +28,9 @@ export class RecipeService{
   }
 
   addIngredientToShoppingList(ingredients: Ingredient[]){
-    this.shoppingListService.addIngredients(ingredients);
+    console.log('in', ingredients)
+    // this.shoppingListService.addIngredients(ingredients);
+    this.store.dispatch(new ShoppingListActions.AddIngredients(ingredients));
   }
   
   addRecipe(recipe: Recipe){
